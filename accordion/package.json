@@ -1,0 +1,23 @@
+{
+  "name": "wc-accordion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx babel ./src/accordion.js --out-file ./dist/accordion.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timwright12/web-components.git"
+  },
+  "author": "Tim Wright",
+  "license": "MIT",
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^2.1.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0"
+  }
+}
