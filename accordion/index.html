@@ -3,9 +3,20 @@
 <head>
 	<meta charset="UTF-8">
 	<title>ES2015 Web Component Tutorial</title>
+	
+	<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	
+	<style>
+		body {
+			padding: 2em;
+			margin: 0 auto;
+			max-width: 30em;
+		}
+	</style>
+	
 </head>
 <body>
-
+	
 	<accordion-menu>
 		<accordion-panel aria-label="Question One" slot="panel">
 			<div slot="content">
@@ -17,75 +28,9 @@
 			<div slot="content">Answer Two</div>
 		</accordion-panel>
 	</accordion-menu>
-
-	<template id="accordion-menu">
-		<style>
-			:host {
-				border: 1px solid rgba(0,0,0,.125);
-				border-radius: 3px;
-				display: block;
-				font-family: sans-serif;
-				overflow: hidden;
-			}
-			
-			.accordion-menu {
-				margin: 0;
-			}
-		</style>
-		<dl class="accordion-menu">
-			<slot name="panel"></slot>
-		</dl>
-	</template>
 	
-	<template id="accordion-panel">
-		<style>
-			:host {
-				display: block;
-				font-family: sans-serif;
-			}
-			
-			[aria-hidden="true"] {
-				display: none;
-			}
-			
-			.accordion-trigger {
-				background-color: rgba(0,0,0,.03);
-				border-bottom: 1px solid rgba(0,0,0,.125);
-				padding: .75rem 1.25rem;
-				margin-bottom: 0;
-			}
-			
-			.accordion-action {
-				background: transparent;
-				border: 1px solid transparent;
-				color: #007bff;
-				cursor: pointer;
-				display: inline-block;
-				font-family: inherit;
-				font-size: 1em;
-				font-weight: 400;
-				line-height: 1.5;
-				padding: .375rem .75rem;
-				text-align: center;
-				user-select: none;
-				vertical-align: middle;
-				white-space: nowrap;
-			}
-			
-			.accordion-panel {
-				color: #333;
-				padding: 1em;
-				margin: 0;
-			}
-			
-		</style>
-		<dd aria-hidden="true" class="accordion-panel" id="content" >
-			<slot name="content">My default text</slot>
-		</dd>
-	</template>
-
-	<script src="dist/accordion.js"></script>
+	<script type="module" src="src/accordion-menu/accordion-menu.js"></script>
+	<script type="module" src="src/accordion-panel/accordion-panel.js"></script>
+	
 </body>
 </html>
-
-

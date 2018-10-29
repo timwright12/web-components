@@ -1,20 +1,3 @@
-class accordionMenu extends HTMLElement {
-
-	constructor() {
-
-		super();
-		const template = document.getElementById( 'accordion-menu' );
-		const templateContent = template.content;
-		const self = this;
-
-		const shadowRoot = this.attachShadow( {
-			mode: 'open'
-		} ).appendChild( templateContent.cloneNode( true ) );
-
-	}
-
-}
-
 class accordionPanel extends HTMLElement {
 
 	constructor() {
@@ -22,14 +5,59 @@ class accordionPanel extends HTMLElement {
 		super();
 
 		const template = document.getElementById( 'accordion-panel' );
-		const templateContent = template.content;
+		const templateContent = `
+			<style>
+				:host {
+					display: block;
+					font-family: sans-serif;
+				}
+				
+				[aria-hidden="true"] {
+					display: none;
+				}
+				
+				.accordion-trigger {
+					background-color: rgba(0,0,0,.03);
+					border-bottom: 1px solid rgba(0,0,0,.125);
+					padding: .75rem 1.25rem;
+					margin-bottom: 0;
+				}
+				
+				.accordion-action {
+					background: transparent;
+					border: 1px solid transparent;
+					color: #007bff;
+					cursor: pointer;
+					display: inline-block;
+					font-family: inherit;
+					font-size: 1em;
+					font-weight: 400;
+					line-height: 1.5;
+					padding: .375rem .75rem;
+					text-align: center;
+					user-select: none;
+					vertical-align: middle;
+					white-space: nowrap;
+				}
+				
+				.accordion-panel {
+					color: #333;
+					padding: 1em;
+					margin: 0;
+				}
+				
+			</style>
+			<dd aria-hidden="true" class="accordion-panel" id="content" >
+				<slot name="content">My default text</slot>
+			</dd>
+		`;
 		const self = this;
 		const button = document.createElement( 'button' );
 		const dt = document.createElement( 'dt' );
 
 		const shadowRoot = this.attachShadow( {
 			mode: 'open'
-		} ).appendChild( templateContent.cloneNode( true ) );
+		} ).innerHTML = templateContent;
 
 		const content = this.shadowRoot.getElementById( 'content' );
 
@@ -48,7 +76,7 @@ class accordionPanel extends HTMLElement {
 		// Add term and trigger into the shadowRoot
 		self.shadowRoot.insertBefore( dt, content );
 
-		// Click event for trigg er
+		// Click event for trigger
 		button.addEventListener( 'click', function() {
 
 			var controls = this.getAttribute( 'aria-controls' );
@@ -72,5 +100,6 @@ class accordionPanel extends HTMLElement {
 
 }
 
-window.customElements.define( 'accordion-menu', accordionMenu );
 window.customElements.define( 'accordion-panel', accordionPanel );
+
+export default accordionPanel;
