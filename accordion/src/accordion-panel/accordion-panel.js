@@ -81,7 +81,7 @@ class accordionPanel extends HTMLElement {
 		
 		// If open, open it
 		if ( self.open ) {
-			this.openPanel( button, self.shadowRoot.getElementById( 'content' ) );
+			self.openPanel( button, self.shadowRoot.getElementById( 'content' ) );
 		}
 		
 		// Add button to term
@@ -104,12 +104,12 @@ class accordionPanel extends HTMLElement {
 		
 		if ( state === 'true' ) {
 
-			this.openPanel( btn, target );
+			self.openPanel( btn, target );
 			target.focus();
 			
 		} else {
 			
-			this.closePanel( btn, target );
+			self.closePanel( btn, target );
 
 		}
 	} // togglePanel ()
