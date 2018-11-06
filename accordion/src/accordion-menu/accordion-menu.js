@@ -4,7 +4,6 @@ class accordionMenu extends HTMLElement {
 
 		super();
 
-		const template = document.getElementById( 'accordion-menu' );
 		const templateContent = `
 			<style>
 				:host {
@@ -24,10 +23,11 @@ class accordionMenu extends HTMLElement {
 			</dl>
 		`;
 		const self = this;
-
-		const shadowRoot = this.attachShadow( {
+		const shadowRoot = self.attachShadow( {
 			mode: 'open'
-		} ).innerHTML = templateContent;
+		} );
+		
+		shadowRoot.innerHTML = templateContent;
 
 	}
 

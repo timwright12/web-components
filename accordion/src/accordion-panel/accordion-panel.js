@@ -4,7 +4,6 @@ class accordionPanel extends HTMLElement {
 
 		super();
 
-		const template = document.getElementById( 'accordion-panel' );
 		const templateContent = `
 			<style>
 				:host {
@@ -54,12 +53,13 @@ class accordionPanel extends HTMLElement {
 		const self = this;
 		const button = document.createElement( 'button' );
 		const dt = document.createElement( 'dt' );
-
-		const shadowRoot = this.attachShadow( {
+		const shadowRoot = self.attachShadow( {
 			mode: 'open'
-		} ).innerHTML = templateContent;
+		} );
+		
+		shadowRoot.innerHTML = templateContent;
 
-		const content = this.shadowRoot.getElementById( 'content' );
+		const content = self.shadowRoot.getElementById( 'content' );
 
 		// Set up definition term
 		dt.setAttribute( 'class', 'accordion-trigger' );
@@ -78,23 +78,24 @@ class accordionPanel extends HTMLElement {
 
 		// Click event for trigger
 		button.addEventListener( 'click', function() {
-
-			var controls = this.getAttribute( 'aria-controls' );
-			var target = self.shadowRoot.getElementById(controls);
+			
+			var btn = this;
+			var controls = btn.getAttribute( 'aria-controls' );
+			var target = self.shadowRoot.getElementById( controls );
 			var state = target.getAttribute( 'aria-hidden' );
 			
 			if ( state === 'true' ) {
-				this.setAttribute( 'aria-expanded', 'true' );
+				btn.setAttribute( 'aria-expanded', 'true' );
 				target.setAttribute( 'aria-hidden', 'false' );
 				target.setAttribute( 'tabindex', '-1' );
 				target.focus();
 			} else {
-				this.setAttribute( 'aria-expanded', 'false' );
+				btn.setAttribute( 'aria-expanded', 'false' );
 				target.setAttribute( 'aria-hidden', 'true' );
 				target.removeAttribute( 'tabindex' );
 			}
 			
-		} );
+		} , false );
 
 	}
 
