@@ -68,7 +68,7 @@ class accordionPanel extends HTMLElement {
 		button.setAttribute( 'class', 'accordion-action' );
 		button.setAttribute( 'aria-controls', 'content' );
 		button.setAttribute( 'aria-expanded', 'false' );
-		button.textContent=self.getAttribute( 'aria-label' );
+		button.textContent = self.getAttribute( 'aria-label' );
 
 		// Add button to term
 		dt.appendChild( button );

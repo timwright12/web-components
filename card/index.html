@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title>ES2015 Web Component Tutorial</title>
+	
+	<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+	
+	<style>
+		body {
+			padding: 2em;
+			margin: 0 auto;
+			max-width: 30em;
+		}
+	</style>
+	
+</head>
+<body>
+	
+	<ui-card heading="Welcome to Murrayland" headingLevel="2" url="http://google.com" image="//www.fillmurray.com/g/300/200" imageAlt="Bill Murray">
+		<p>William James Murray (born September 21, 1950) is an American actor, comedian, and writer. He first gained exposure on Saturday Night Live, a series of performances that earned him his first Emmy Award, and later starred in comedy films.</p>
+	</ui-card>
+	
+	<!-- Load the processed script -->
+	<script type="module" src="dist/index.min.js"></script>
+	
+</body>
+</html>
