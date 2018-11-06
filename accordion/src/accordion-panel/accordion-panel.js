@@ -91,9 +91,7 @@ class accordionPanel extends HTMLElement {
 		self.shadowRoot.insertBefore( dt, content );
 
 		// Click event for trigger
-		button.addEventListener( 'click', () => {
-			this.togglePanel( self );
-		}, false );
+		button.addEventListener('click', () => { self.open = true }, false );
 
 	} // constructor()
 	
@@ -114,46 +112,68 @@ class accordionPanel extends HTMLElement {
 			this.closePanel( btn, target );
 
 		}
-	}
+	} // togglePanel ()
 	
 	openPanel( btn, target ) {
+
 		btn.setAttribute( 'aria-expanded', 'true' );
 		target.setAttribute( 'aria-hidden', 'false' );
 		target.setAttribute( 'tabindex', '-1' );
-	}
+
+	} // openPanel()
 	
 	closePanel( btn, target ) {
+
 		btn.setAttribute( 'aria-expanded', 'false' );
 		target.setAttribute( 'aria-hidden', 'true' );
 		target.removeAttribute( 'tabindex' );
-	}
+
+	} // closePanel()
 	
 	// Getter for the open property
 	get open() {
+
 		return this.hasAttribute( 'open' );
+
 	}
 	
 	set open( val ) {
+
 		// Reflect the value of the open property as an HTML attribute.
 		if ( val ) {
+
 			this.setAttribute( 'open', '' );
+
 		} else {
+
 			this.removeAttribute( 'open' );
+
 		}
+		
+		this.togglePanel( this );
+
 	}
 
 	// Getter for the disabled property
 	get disabled() {
+
 		return this.hasAttribute('disabled');
+
 	}
 	
 	set disabled( val ) {
+
 		// Reflect the value of the disabled property as an HTML attribute.
 		if ( val ) {
+
 			this.setAttribute( 'disabled', '' );
+
 		} else {
+
 			this.removeAttribute( 'disabled' );
+
 		}
+
 	}
 
 }
