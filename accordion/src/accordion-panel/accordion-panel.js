@@ -10,18 +10,18 @@ class accordionPanel extends HTMLElement {
 					display: block;
 					font-family: sans-serif;
 				}
-				
+
 				[aria-hidden="true"] {
 					display: none;
 				}
-				
+
 				.accordion-trigger {
 					background-color: rgba(0,0,0,.03);
 					border-bottom: 1px solid rgba(0,0,0,.125);
 					padding: .75rem 1.25rem;
 					margin-bottom: 0;
 				}
-				
+
 				.accordion-action {
 					background: transparent;
 					border: 1px solid transparent;
@@ -38,13 +38,17 @@ class accordionPanel extends HTMLElement {
 					vertical-align: middle;
 					white-space: nowrap;
 				}
-				
+
+				.accordion-action[disabled] {
+					cursor: not-allowed;
+				}
+
 				.accordion-panel {
 					color: #333;
 					padding: 1em;
 					margin: 0;
 				}
-				
+
 			</style>
 			<dd aria-hidden="true" class="accordion-panel" id="content" >
 				<slot name="content">My default text</slot>
@@ -69,7 +73,17 @@ class accordionPanel extends HTMLElement {
 		button.setAttribute( 'aria-controls', 'content' );
 		button.setAttribute( 'aria-expanded', 'false' );
 		button.textContent = self.getAttribute( 'aria-label' );
-
+		
+		// If disabled, disabled it
+		if ( self.disabled ) {
+			button.setAttribute( 'disabled', '' );
+		}
+		
+		// If open, open it
+		if ( self.open ) {
+			this.openPanel( button, self.shadowRoot.getElementById( 'content' ) );
+		}
+		
 		// Add button to term
 		dt.appendChild( button );
 
@@ -77,26 +91,69 @@ class accordionPanel extends HTMLElement {
 		self.shadowRoot.insertBefore( dt, content );
 
 		// Click event for trigger
-		button.addEventListener( 'click', function() {
-			
-			var btn = this;
-			var controls = btn.getAttribute( 'aria-controls' );
-			var target = self.shadowRoot.getElementById( controls );
-			var state = target.getAttribute( 'aria-hidden' );
-			
-			if ( state === 'true' ) {
-				btn.setAttribute( 'aria-expanded', 'true' );
-				target.setAttribute( 'aria-hidden', 'false' );
-				target.setAttribute( 'tabindex', '-1' );
-				target.focus();
-			} else {
-				btn.setAttribute( 'aria-expanded', 'false' );
-				target.setAttribute( 'aria-hidden', 'true' );
-				target.removeAttribute( 'tabindex' );
-			}
-			
-		} , false );
+		button.addEventListener( 'click', () => {
+			this.togglePanel( self );
+		}, false );
 
+	} // constructor()
+	
+	togglePanel( self ) {
+		
+		var btn = self.shadowRoot.querySelector('.accordion-action');
+		var controls = self.shadowRoot.querySelector('.accordion-action').getAttribute( 'aria-controls' );
+		var target = self.shadowRoot.getElementById( controls );
+		var state = target.getAttribute( 'aria-hidden' );
+		
+		if ( state === 'true' ) {
+
+			this.openPanel( btn, target );
+			target.focus();
+			
+		} else {
+			
+			this.closePanel( btn, target );
+
+		}
+	}
+	
+	openPanel( btn, target ) {
+		btn.setAttribute( 'aria-expanded', 'true' );
+		target.setAttribute( 'aria-hidden', 'false' );
+		target.setAttribute( 'tabindex', '-1' );
+	}
+	
+	closePanel( btn, target ) {
+		btn.setAttribute( 'aria-expanded', 'false' );
+		target.setAttribute( 'aria-hidden', 'true' );
+		target.removeAttribute( 'tabindex' );
+	}
+	
+	// Getter for the open property
+	get open() {
+		return this.hasAttribute( 'open' );
+	}
+	
+	set open( val ) {
+		// Reflect the value of the open property as an HTML attribute.
+		if ( val ) {
+			this.setAttribute( 'open', '' );
+		} else {
+			this.removeAttribute( 'open' );
+		}
+	}
+
+	// Getter for the disabled property
+	get disabled() {
+		return this.hasAttribute('disabled');
+	}
+	
+	set disabled( val ) {
+		// Reflect the value of the disabled property as an HTML attribute.
+		if ( val ) {
+			this.setAttribute( 'disabled', '' );
+		} else {
+			this.removeAttribute( 'disabled' );
+		}
 	}
 
 }

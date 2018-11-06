@@ -17,17 +17,17 @@
 </head>
 <body>
 	
-<accordion-menu>
-	<accordion-panel aria-label="Question One" slot="panel">
-		<div slot="content">
-			<p>Answer <em>One</em></p>
-		</div>
-	</accordion-panel>
-	
-	<accordion-panel aria-label="Question Two" slot="panel">
-		<div slot="content">What the What?</div>
-	</accordion-panel>
-</accordion-menu>
+	<accordion-menu>
+		<accordion-panel aria-label="Question One" slot="panel" open>
+			<div slot="content">
+				<p>Answer <em>One</em> should be open by default</p>
+			</div>
+		</accordion-panel>
+		
+		<accordion-panel aria-label="Question Two" slot="panel">
+			<div slot="content">What the What?</div>
+		</accordion-panel>
+	</accordion-menu>
 	
 	<!-- Load the modules directly
 	<script type="module" src="src/accordion-menu/accordion-menu.js"></script>
@@ -35,7 +35,7 @@
 	-->
 	
 	<!-- Load the processed script -->
-	<script type="module" src="dist/index.min.js"></script>
+	<script src="dist/index.min.js"></script>
 	
 </body>
 </html>
