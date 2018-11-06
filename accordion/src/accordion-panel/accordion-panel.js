@@ -97,10 +97,10 @@ class accordionPanel extends HTMLElement {
 	
 	togglePanel( self ) {
 		
-		var btn = self.shadowRoot.querySelector('.accordion-action');
-		var controls = self.shadowRoot.querySelector('.accordion-action').getAttribute( 'aria-controls' );
-		var target = self.shadowRoot.getElementById( controls );
-		var state = target.getAttribute( 'aria-hidden' );
+		const btn = self.shadowRoot.querySelector('.accordion-action');
+		const controls = self.shadowRoot.querySelector('.accordion-action').getAttribute( 'aria-controls' );
+		const target = self.shadowRoot.getElementById( controls );
+		const state = target.getAttribute( 'aria-hidden' );
 		
 		if ( state === 'true' ) {
 
