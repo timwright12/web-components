@@ -6,17 +6,7 @@ class accordionMenu extends HTMLElement {
 
 		const templateContent = `
 			<style>
-				:host {
-					border: 1px solid rgba(0,0,0,.125);
-					border-radius: 3px;
-					display: block;
-					font-family: sans-serif;
-					overflow: hidden;
-				}
-
-				.accordion-menu {
-					margin: 0;
-				}
+				@import "./src/accordion-menu/accordion-menu.css";
 			</style>
 			<dl class="accordion-menu">
 				<slot></slot>

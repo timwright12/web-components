@@ -8,50 +8,7 @@ class accordionPanel extends HTMLElement {
 
 		const templateContent = `
 			<style>
-				:host {
-					display: block;
-					font-family: sans-serif;
-				}
-
-				[aria-hidden="true"] {
-					display: none;
-				}
-
-				.accordion-trigger {
-					background-color: rgba(0,0,0,.03);
-					border-bottom: 1px solid rgba(0,0,0,.125);
-					padding: .75rem 1.25rem;
-					margin-bottom: 0;
-				}
-
-				.accordion-action {
-					background: transparent;
-					border: 1px solid transparent;
-					color: #007bff;
-					cursor: pointer;
-					display: inline-block;
-					font-family: inherit;
-					font-size: 1em;
-					font-weight: 400;
-					line-height: 1.5;
-					padding: .375rem .75rem;
-					text-align: center;
-					user-select: none;
-					vertical-align: middle;
-					white-space: nowrap;
-				}
-
-				.accordion-action[disabled] {
-					color: #888;
-					cursor: not-allowed;
-				}
-
-				.accordion-panel {
-					color: #333;
-					padding: 1em;
-					margin: 0;
-				}
-
+				@import "./src/accordion-panel/accordion-panel.css";
 			</style>
 			<dd aria-hidden="true" class="accordion-panel" id="content" >
 				<slot></slot>
@@ -140,15 +97,11 @@ class accordionPanel extends HTMLElement {
 		const state = target.getAttribute( 'aria-hidden' );
 
 		if ( 'true' === state ) {
-
 			self.openPanel( btn, target );
-			//target.focus();
-
 		} else {
-
 			self.closePanel( btn, target );
-
 		}
+
 	} // togglePanel ()
 
 	openPanel( btn, target ) {
