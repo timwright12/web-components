@@ -121,6 +121,20 @@ class accordionPanel extends HTMLElement {
 
 	} // closePanel()
 
+	findNextElement() {
+		/*
+			This function should locate the next selectable element, skipping
+			all disabled items.
+		*/
+	}
+
+	findPreviousElement() {
+		/*
+			This function should locate the closest previous selectable element, skipping
+			all disabled items.
+		*/
+	}
+
 	// Getter for the open property
 	get open() {
 		return this.hasAttribute( 'open' );
