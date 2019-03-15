@@ -42,6 +42,7 @@ class accordionPanel extends HTMLElement {
 				}
 
 				.accordion-action[disabled] {
+					color: #888;
 					cursor: not-allowed;
 				}
 
@@ -53,12 +54,14 @@ class accordionPanel extends HTMLElement {
 
 			</style>
 			<dd aria-hidden="true" class="accordion-panel" id="content" >
-				<slot name="content">My default text</slot>
+				<slot></slot>
 			</dd>
 		`;
+
 		const self = this;
 		const button = document.createElement( 'button' );
 		const dt = document.createElement( 'dt' );
+
 		const shadowRoot = self.attachShadow( {
 			mode: 'open'
 		} );
@@ -97,18 +100,32 @@ class accordionPanel extends HTMLElement {
 		// Keyup event for trigger
 		button.addEventListener( 'keyup', ( e ) => {
 
+			const firstElement = this.parentNode.firstElementChild;
+			const lastElement = this.parentNode.lastElementChild;
+
 			switch ( e.keyCode ) {
 					case DOWNARROW:
-						console.log( 'DOWN key was pressed, move to next panel' );
+						if ( null !== this.nextElementSibling ) {
+							this.nextElementSibling.shadowRoot.querySelector( 'button' ).focus();
+						} else {
+							firstElement.shadowRoot.querySelector( 'button' ).focus();
+						}
 						break;
+
 					case UPARROW:
-						console.log( 'UP key was pressed, move to previous panel' );
+						if ( null !== this.previousElementSibling ) {
+							this.previousElementSibling.shadowRoot.querySelector( 'button' ).focus();
+						} else {
+							lastElement.shadowRoot.querySelector( 'button' ).focus();
+						}
 						break;
+
 					case HOME:
-						console.log( 'HOME key was pressed, move to first panel' );
+						firstElement.shadowRoot.querySelector( 'button' ).focus();
 						break;
+
 					case END:
-						console.log( 'END key was pressed, move to last panel' );
+						lastElement.shadowRoot.querySelector( 'button' ).focus();
 						break;
 			}
 		}, false );

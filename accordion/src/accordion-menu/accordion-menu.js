@@ -13,20 +13,20 @@ class accordionMenu extends HTMLElement {
 					font-family: sans-serif;
 					overflow: hidden;
 				}
-				
+
 				.accordion-menu {
 					margin: 0;
 				}
 			</style>
 			<dl class="accordion-menu">
-				<slot name="panel"></slot>
+				<slot></slot>
 			</dl>
 		`;
 		const self = this;
 		const shadowRoot = self.attachShadow( {
 			mode: 'open'
 		} );
-		
+
 		shadowRoot.innerHTML = templateContent;
 
 	}

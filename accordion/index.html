@@ -18,14 +18,18 @@
 <body>
 
 	<accordion-menu>
-		<accordion-panel slot="panel" open>
-			<div slot="content">
-				<p>Answer <em>One</em> should be open by default</p>
-			</div>
+		<accordion-panel open>
+			<p>Answer <em>One</em> should be open by default</p>
 		</accordion-panel>
 
-		<accordion-panel aria-label="Question Two" slot="panel">
-			<div slot="content">What the What?</div>
+		<accordion-panel aria-label="Question Two, disabled">
+			What the What?
+		</accordion-panel>
+
+		<accordion-panel aria-label="Awesome Third Questions">
+			<p>
+				Hello there Mr. or Ms. Human.
+			</p>
 		</accordion-panel>
 	</accordion-menu>
 
