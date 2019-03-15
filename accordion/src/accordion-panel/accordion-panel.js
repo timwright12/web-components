@@ -1,7 +1,13 @@
 import { DOWNARROW, UPARROW, HOME, END } from '@barebones/keycodes';
 
+/**
+ * Accordion Panel Component Class
+ */
 class accordionPanel extends HTMLElement {
 
+	/**
+	 * Constructor
+	 */
 	constructor() {
 
 		super();
@@ -38,7 +44,7 @@ class accordionPanel extends HTMLElement {
 		button.textContent = self.getAttribute( 'aria-label' );
 
 		// If the aria-label is missing expose a visual error
-		button.textContent ? '' : button.textContent = '(Please set a label for this panel)';
+		button.textContent ? '' : button.textContent = '(!#ERR Please set a label for this panel)';
 
 		// If disabled, disabled it
 		self.disabled ? button.setAttribute( 'disabled', '' ) : null;
@@ -58,38 +64,30 @@ class accordionPanel extends HTMLElement {
 		// Keyup event for trigger
 		button.addEventListener( 'keyup', ( e ) => {
 
-			const firstElement = self.parentNode.firstElementChild;
-			const lastElement = self.parentNode.lastElementChild;
-
 			switch ( e.keyCode ) {
 					case DOWNARROW:
-						if ( null !== self.nextElementSibling ) {
-							self.nextElementSibling.shadowRoot.querySelector( 'button' ).focus();
-						} else {
-							firstElement.shadowRoot.querySelector( 'button' ).focus();
-						}
+						self.nextElementSibling ? self.findNextElement( this ) : self.findFirstElement( this );
 						break;
 
 					case UPARROW:
-						if ( null !== self.previousElementSibling ) {
-							self.previousElementSibling.shadowRoot.querySelector( 'button' ).focus();
-						} else {
-							lastElement.shadowRoot.querySelector( 'button' ).focus();
-						}
+						self.previousElementSibling ? self.findPreviousElement( this ) : self.findLastElement( this );
 						break;
 
 					case HOME:
-						firstElement.shadowRoot.querySelector( 'button' ).focus();
+						self.findFirstElement( this );
 						break;
 
 					case END:
-						lastElement.shadowRoot.querySelector( 'button' ).focus();
+						self.findLastElement();
 						break;
 			}
 		}, false );
 
 	} // constructor()
 
+	/**
+	 * Open and close a panel
+	 */
 	togglePanel( self ) {
 
 		const btn = self.shadowRoot.querySelector( '.accordion-action' );
@@ -105,6 +103,9 @@ class accordionPanel extends HTMLElement {
 
 	} // togglePanel ()
 
+	/**
+	 * Utility to open the current panel
+	 */
 	openPanel( btn, target ) {
 
 		btn.setAttribute( 'aria-expanded', 'true' );
@@ -113,6 +114,9 @@ class accordionPanel extends HTMLElement {
 
 	} // openPanel()
 
+	/**
+	 * Utility to close the current panel
+	 */
 	closePanel( btn, target ) {
 
 		btn.setAttribute( 'aria-expanded', 'false' );
@@ -121,25 +125,87 @@ class accordionPanel extends HTMLElement {
 
 	} // closePanel()
 
-	findNextElement() {
-		/*
-			This function should locate the next selectable element, skipping
-			all disabled items.
-		*/
+	/**
+	 * Helper function to get the next accordionPanel
+	 * @param {Object} block the current panel
+	 */
+	findNextElement( block ) {
+
+		let nextSibling = block.nextElementSibling;
+		const siblings = [];
+
+		while ( nextSibling ) {
+			if ( !nextSibling.disabled ) break;
+			siblings.push( nextSibling );
+			nextSibling = nextSibling.nextElementSibling;
+		}
+
+		if( null !== nextSibling ) {
+			nextSibling.shadowRoot.querySelector( 'button' ).focus();
+		} else {
+			this.findFirstElement( block );
+		}
+
 	}
 
-	findPreviousElement() {
-		/*
-			This function should locate the closest previous selectable element, skipping
-			all disabled items.
-		*/
+	/**
+	* Helper function to get the previous accordionPanel
+	* @param {Object} block the current panel
+	 */
+	findPreviousElement( block ) {
+		let prevSibling = block.previousElementSibling;
+		const siblings = [];
+
+		while ( prevSibling ) {
+			if ( !prevSibling.disabled ) break;
+			siblings.push( prevSibling );
+			prevSibling = prevSibling.previousElementSibling;
+		}
+
+		if( null !== prevSibling ) {
+			prevSibling.shadowRoot.querySelector( 'button' ).focus();
+		} else {
+			this.findLastElement( block );
+		}
+
 	}
 
-	// Getter for the open property
+	/**
+	* Helper function to get the last accordionPanel
+	* @param {Object} block the current panel
+	 */
+	findLastElement( block ) {
+		const lastElement = block.parentNode.lastElementChild;
+		if ( lastElement.disabled ) {
+			this.findPreviousElement( lastElement );
+		} else {
+			lastElement.shadowRoot.querySelector( 'button' ).focus();
+		}
+	}
+
+	/**
+	* Helper function to get the first accordionPanel
+	* @param {Object} block the current panel
+	 */
+	findFirstElement( block ) {
+		const firstElement = block.parentNode.firstElementChild;
+		if ( firstElement.disabled ) {
+			this.findNextElement( firstElement );
+		} else {
+			firstElement.shadowRoot.querySelector( 'button' ).focus();
+		}
+	}
+
+	/**
+	 * Getter for the open property
+	 */
 	get open() {
 		return this.hasAttribute( 'open' );
 	}
 
+	/**
+	 * Setter for the open property
+	 */
 	set open( val ) {
 
 		// Reflect the value of the open property as an HTML attribute.
@@ -153,11 +219,16 @@ class accordionPanel extends HTMLElement {
 
 	}
 
-	// Getter for the disabled property
+	/**
+	 * Getter for the disabled property
+	 */
 	get disabled() {
 		return this.hasAttribute( 'disabled' );
 	}
 
+	/**
+	 * Setter for the disabled property
+	 */
 	set disabled( val ) {
 
 		// Reflect the value of the disabled property as an HTML attribute.

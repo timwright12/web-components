@@ -1,5 +1,11 @@
+/**
+ * Accordion Menu Component Class
+ */
 class accordionMenu extends HTMLElement {
 
+	/**
+	 * Constructor
+	 */
 	constructor() {
 
 		super();
