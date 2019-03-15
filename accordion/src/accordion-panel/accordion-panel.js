@@ -10,7 +10,7 @@ class accordionPanel extends HTMLElement {
 			<style>
 				@import "./src/accordion-panel/accordion-panel.css";
 			</style>
-			<dd aria-hidden="true" class="accordion-panel" id="content" >
+			<dd aria-hidden="true" class="accordion-panel" id="content" role="region" aria-labelledby="trigger-button">
 				<slot></slot>
 			</dd>
 		`;
@@ -34,6 +34,7 @@ class accordionPanel extends HTMLElement {
 		button.setAttribute( 'class', 'accordion-action' );
 		button.setAttribute( 'aria-controls', 'content' );
 		button.setAttribute( 'aria-expanded', 'false' );
+		button.setAttribute( 'id', 'trigger-button' );
 		button.textContent = self.getAttribute( 'aria-label' );
 
 		// If the aria-label is missing expose a visual error
@@ -57,21 +58,21 @@ class accordionPanel extends HTMLElement {
 		// Keyup event for trigger
 		button.addEventListener( 'keyup', ( e ) => {
 
-			const firstElement = this.parentNode.firstElementChild;
-			const lastElement = this.parentNode.lastElementChild;
+			const firstElement = self.parentNode.firstElementChild;
+			const lastElement = self.parentNode.lastElementChild;
 
 			switch ( e.keyCode ) {
 					case DOWNARROW:
-						if ( null !== this.nextElementSibling ) {
-							this.nextElementSibling.shadowRoot.querySelector( 'button' ).focus();
+						if ( null !== self.nextElementSibling ) {
+							self.nextElementSibling.shadowRoot.querySelector( 'button' ).focus();
 						} else {
 							firstElement.shadowRoot.querySelector( 'button' ).focus();
 						}
 						break;
 
 					case UPARROW:
-						if ( null !== this.previousElementSibling ) {
-							this.previousElementSibling.shadowRoot.querySelector( 'button' ).focus();
+						if ( null !== self.previousElementSibling ) {
+							self.previousElementSibling.shadowRoot.querySelector( 'button' ).focus();
 						} else {
 							lastElement.shadowRoot.querySelector( 'button' ).focus();
 						}
