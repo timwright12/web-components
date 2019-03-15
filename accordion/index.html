@@ -3,9 +3,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>ES2015 Web Component Tutorial</title>
-	
+
 	<script src="node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-	
+
 	<style>
 		body {
 			padding: 2em;
@@ -13,29 +13,29 @@
 			max-width: 30em;
 		}
 	</style>
-	
+
 </head>
 <body>
-	
+
 	<accordion-menu>
-		<accordion-panel aria-label="Question One" slot="panel" open>
+		<accordion-panel slot="panel" open>
 			<div slot="content">
 				<p>Answer <em>One</em> should be open by default</p>
 			</div>
 		</accordion-panel>
-		
+
 		<accordion-panel aria-label="Question Two" slot="panel">
 			<div slot="content">What the What?</div>
 		</accordion-panel>
 	</accordion-menu>
-	
+
 	<!-- Load the modules directly
 	<script type="module" src="src/accordion-menu/accordion-menu.js"></script>
 	<script type="module" src="src/accordion-panel/accordion-panel.js"></script>
 	-->
-	
+
 	<!-- Load the processed script -->
 	<script src="dist/index.min.js"></script>
-	
+
 </body>
 </html>
