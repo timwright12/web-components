@@ -78,7 +78,7 @@ class accordionPanel extends HTMLElement {
 						break;
 
 					case END:
-						self.findLastElement();
+						self.findLastElement( this );
 						break;
 			}
 		}, false );
